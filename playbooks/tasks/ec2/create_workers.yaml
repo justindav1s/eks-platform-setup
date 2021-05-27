@@ -1,0 +1,76 @@
+- ec2_vpc_net_facts:
+    filters:
+      "tag:Role": "{{ role.tag }}"
+  register: vpc_facts
+
+- name: "set fact: VPC ID"
+  set_fact:
+    vpc_id: "{{ vpc_facts.vpcs[0].vpc_id }}"
+
+- ec2_group_facts:
+    filters:
+      vpc-id: "{{ vpc_id }}"
+      "tag:Name": "{{ role.tag }}-{{ workers.control_plane_sg }}-sg"
+  register: sec_groups_facts
+
+- name: "set fact: SG ID"
+  set_fact:
+    sg_id: "{{ sec_groups_facts.security_groups[0].group_id }}"
+
+- ec2_vpc_subnet_facts:
+    filters:
+      "tag:Role": "{{ role.tag }}"
+  register: subnets_facts
+
+- name: "set fact: VPC subnet 0 ID"
+  set_fact:
+    subnet0_id: "{{ subnets_facts.subnets[0].id }}"
+
+- name: "set fact: VPC subnet 1 ID"
+  set_fact:
+    subnet1_id: "{{ subnets_facts.subnets[1].id  }}"
+
+- name: "set fact: VPC subnet 2 ID"
+  set_fact:
+    subnet2_id: "{{ subnets_facts.subnets[2].id  }}"
+
+- name: ensure IAM worker node role exists
+  iam_role:
+    name: "{{ eks_worker_role_name }}"
+    state: present
+    managed_policies:
+      - AmazonEKSWorkerNodePolicy
+      - AmazonEKS_CNI_Policy
+      - AmazonEC2ContainerRegistryReadOnly
+      - EKSWorkerAdditionalPolicy
+    assume_role_policy_document: "{{ lookup('file', 'ec2-trust-policy.json') }}"
+  register: eks_worker_iam_role
+
+- name: "set fact: worker role arn"
+  set_fact:
+    worker_role_arn: "arn:aws:iam::005459661421:role/cf-role"
+
+- name: "create a cloudformation stack"
+  cloudformation:
+    stack_name: "{{ workers.stack_name }}-1"
+    state: "present"
+    region: "{{ vpc.region }}"
+    disable_rollback: true
+    template: "files/eks-node-group-template.yaml"
+    template_parameters:
+      KeyName: "{{ workers.key_name }}"
+      NodeImageId: "{{ workers.node_ami }}"
+      NodeInstanceType: "{{ workers.instance_type }}"
+      NodeAutoScalingGroupMinSize: "{{ workers.auto_scaling_min }}"
+      NodeAutoScalingGroupMaxSize: "{{ workers.auto_scaling_max }}"
+      NodeAutoScalingGroupDesiredCapacity: "{{ workers.auto_scaling_count }}"
+      NodeVolumeSize: "{{ workers.ebs_vol_gb }}"
+      ClusterName: "{{ workers.cluster_name }}"
+      BootstrapArguments: "{{ workers.bootstrap_args }}"
+      NodeGroupName: "{{ workers.node_group_name }}"
+      ClusterControlPlaneSecurityGroup: "{{ sg_id }}"
+      VpcId: "{{ vpc_id }}"
+      Subnets: "{{ subnet0_id }}"
+    tags:
+      Name: "{{ role.tag }}-cf-stack"
+      Role: "{{ role.tag }}"

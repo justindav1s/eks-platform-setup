@@ -1,0 +1,27 @@
+- name: ensure EKS service role exists
+  iam_role:
+    name: "{{ eks_cluster_role_name }}"
+    state: present
+    managed_policies:
+      - AmazonEKSClusterPolicy
+      - AmazonEKSServicePolicy
+    assume_role_policy_document: "{{ lookup('file', 'eks-trust-policy.json') }}"
+  register: eks_cluster_iam_role
+
+- name: create managed policy for additional EKS Worker permissions
+  iam_managed_policy:
+    state: present
+    policy_name: "EKSWorkerAdditionalPolicy"
+    policy: "{{ lookup('file', 'eks-worker-additional-policy.json') }}"
+
+- name: ensure IAM worker node role exists
+  iam_role:
+    name: "{{ eks_worker_role_name }}"
+    state: present
+    managed_policies:
+      - AmazonEKSWorkerNodePolicy
+      - AmazonEKS_CNI_Policy
+      - AmazonEC2ContainerRegistryReadOnly
+      - EKSWorkerAdditionalPolicy
+    assume_role_policy_document: "{{ lookup('file', 'ec2-trust-policy.json') }}"
+  register: eks_worker_iam_role

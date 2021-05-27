@@ -1,0 +1,28 @@
+- ec2_vpc_net_facts:
+    filters:
+      "tag:Role": "{{ role.tag }}"
+  register: vpc_facts
+
+- name: "set fact: VPC ID"
+  set_fact:
+    vpc_id: "{{ vpc_facts.vpcs[0].vpc_id }}"
+
+- ec2_vpc_subnet_facts:
+    filters:
+      "tag:Role": "{{ role.tag }}"
+  register: subnets_facts
+
+- name: "set fact: VPC subnet IDs"
+  set_fact:
+    vpc_subnet_ids: "{{ vpc_subnet_ids | default({}) | combine({ item.id : item.cidr_block }) }}"
+  loop: "{{ subnets_facts.subnets }}"
+
+- name: delete VPC subnets
+  ec2_vpc_subnet:
+    state: absent
+    vpc_id: "{{ vpc_id }}"
+    cidr: "{{ item.value }}"
+    tags:
+      Name: "{{ item.key }}"
+  with_dict: "{{ vpc_subnet_ids }}"
+  when: vpc_subnet_ids is defined

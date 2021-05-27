@@ -1,0 +1,14 @@
+- name: ensure EKS service role exists
+  iam_role:
+    name: "{{ eks_cluster_role_name }}"
+    state: absent
+
+- name: create managed policy for additional EKS Worker permissions
+  iam_managed_policy:
+    state: absent
+    policy_name: "EKSWorkerAdditionalPolicy"
+
+- name: ensure IAM worker node role exists
+  iam_role:
+    name: "{{ eks_worker_role_name }}"
+    state: absent

@@ -1,0 +1,10 @@
+- hosts: all
+  connection: local
+  gather_facts: False
+  tasks:
+    - include_tasks: tasks/vpc/create_vpc.yaml
+    - include_tasks: tasks/subnet/create_subnets.yaml
+    - include_tasks: tasks/igw/create_igw.yaml
+    - include_tasks: tasks/rt/create_rt.yaml
+    - include_tasks: tasks/sg/create_sg.yaml
+    - include_tasks: tasks/iam/create_iam.yaml

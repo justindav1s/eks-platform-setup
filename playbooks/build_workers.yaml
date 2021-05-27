@@ -1,0 +1,5 @@
+- hosts: all
+  connection: local
+  gather_facts: False
+  tasks:
+    - include_tasks: tasks/ec2/create_workers.yaml

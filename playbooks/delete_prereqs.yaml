@@ -1,0 +1,10 @@
+- hosts: all
+  connection: local
+  gather_facts: False
+  tasks:
+    - include_tasks: tasks/iam/delete_iam.yaml
+    - include_tasks: tasks/subnet/delete_subnets.yaml
+    - include_tasks: tasks/igw/delete_igw.yaml
+    - include_tasks: tasks/sg/delete_sg.yaml
+    - include_tasks: tasks/rt/delete_rt.yaml
+    - include_tasks: tasks/vpc/delete_vpc.yaml

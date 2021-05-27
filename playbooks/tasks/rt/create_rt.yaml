@@ -1,0 +1,42 @@
+- ec2_vpc_net_facts:
+    filters:
+      "tag:Role": "{{ role.tag }}"
+  register: vpc_facts
+
+- name: "set fact: VPC ID"
+  set_fact:
+    vpc_id: "{{ vpc_facts.vpcs[0].vpc_id }}"
+
+- ec2_vpc_subnet_facts:
+    filters:
+      "tag:Role": "{{ role.tag }}"
+  register: subnets_facts
+
+- name: "set fact: VPC subnet 0 ID"
+  set_fact:
+    subnet0_id: "{{ subnets_facts.subnets[0].id }}"
+
+- name: "set fact: VPC subnet 1 ID"
+  set_fact:
+    subnet1_id: "{{ subnets_facts.subnets[1].id  }}"
+
+- name: "set fact: VPC subnet 2 ID"
+  set_fact:
+    subnet2_id: "{{ subnets_facts.subnets[2].id  }}"
+
+# Basic creation example:
+- name: Set up public subnet route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ vpc.region }}"
+    tags:
+      Name: "{{ role.tag }}-rt"
+      Role: "{{ role.tag }}"
+    subnets:
+      - "{{ subnet0_id }}"
+      - "{{ subnet1_id }}"
+      - "{{ subnet2_id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id }}"
+  register: eks_route_table

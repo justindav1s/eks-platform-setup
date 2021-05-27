@@ -1,0 +1,11 @@
+# iterate over our list of security groups and create each one with the Ansible module
+- name: create VPC security groups
+  ec2_group:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    vpc_id: "{{ vpc_id }}"
+    rules: "{{ item.rules }}"
+    tags:
+      Name: "{{ role.tag }}-{{ item.name }}-sg"
+      Role: "{{ role.tag }}"
+  loop: "{{ security_groups }}"

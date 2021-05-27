@@ -1,0 +1,6 @@
+- iam_role_facts:
+    name: "{{ eks_worker_role_name }}"
+  register: worker_role_facts
+
+- debug:
+    msg: "{{ worker_role_facts.iam_roles[0].arn }}"
