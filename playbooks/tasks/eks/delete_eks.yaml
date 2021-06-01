@@ -1,6 +1,0 @@
-- name: ensure EKS cluster does not exists
-  aws_eks_cluster:
-    state: absent
-    name: "{{ eks_cluster_name }}"
-    region: "{{ vpc.region }}"
-    wait: yes

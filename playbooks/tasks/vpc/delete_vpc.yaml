@@ -1,5 +1,0 @@
-- name: delete VPC
-  ec2_vpc_net:
-    state: absent
-    name: "{{ vpc.name }}"
-    cidr_block: "{{ vpc.cidr }}"

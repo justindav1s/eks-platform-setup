@@ -1,5 +1,0 @@
-- hosts: all
-  connection: local
-  gather_facts: False
-  tasks:
-    - include_tasks: tasks/iam/facts_iam.yaml
