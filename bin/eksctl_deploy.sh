@@ -24,4 +24,7 @@ eksctl create cluster \
 --ssh-public-key jnd_mac_rh \
 --node-ami-family AmazonLinux2 \
 --managed \
+--with-oidc \
 --kubeconfig /Users/justin/.kube/eks$NAME.config
+
+eksctl utils associate-iam-oidc-provider --cluster $NAME --approve
