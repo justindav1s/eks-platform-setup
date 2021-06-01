@@ -3,6 +3,7 @@
 **/aws-auth-cm.yaml
 **/iam_policy_v1_to_v2_additional.json
 **/iam_policy.json
+**/.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
