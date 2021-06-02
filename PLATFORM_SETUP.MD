@@ -1,0 +1,67 @@
+## Platform setup.
+
+
+1. Create IAM user with Admin API keys for Ansible.
+2. Install Ansible, aws-cli etc
+3. Go to https://gitlab.com/demoplatform/ansible-eks
+4. See shell scripts in bin dir conform to/update these sothat they can pickup crdentials
+5. Run create_prereqs.sh
+6. Run create_eks.sh
+7. Add Node group
+
+KUBECONFIG should be found at ~/.kube/eks.config
+
+### Dashboard
+
+https://github.com/kubernetes/dashboard
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+
+kubectl proxy 
+
+in chrome go to
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/workloads?namespace=_all
+
+You'll need a Token to authenticate
+
+do this :
+
+https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
+
+```
+
+### Istio 
+
+https://www.eksworkshop.com/advanced/310_servicemesh_with_istio/install/
+
+istioctl manifest apply --set profile=default
+
+Download latest Istion bumdle from Github
+
+
+#### Prometheus
+
+kubectl apply -f istio/samples/addons/prometheus.yaml
+
+#### Kiali
+
+kubectl apply -f istio/samples/addons/kiali.yaml
+
+istioctl dashboard kiali
+
+
+
+
+### Kong
+
+```
+kubectl create namespace kong-istio
+kubectl label namespace kong-istio istio-injection=enabled
+helm install -n kong-istio platform kong/kong --set ingressController.installCRDs=false
+```
+
+### Flux2
+
+
