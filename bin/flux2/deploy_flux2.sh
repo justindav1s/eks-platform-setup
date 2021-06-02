@@ -5,7 +5,7 @@
 
 CLUSTER=eks-dev1
 REPO=flux2-ops
-GITLAB_USER=justinndavis
+GITLAB_USER=demoplatform
 
 kubectl create namespace flux-system
 

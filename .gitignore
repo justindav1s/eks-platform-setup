@@ -110,3 +110,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 /credentials.csv
+bin/flux2/notes.txt
