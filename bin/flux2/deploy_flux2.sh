@@ -12,6 +12,6 @@ kubectl create namespace flux-system
 flux bootstrap gitlab \
   --owner=$GITLAB_USER \
   --repository=$REPO \
-  --branch=master \
+  --branch=main \
   --path=./clusters/$CLUSTER \
   --personal
