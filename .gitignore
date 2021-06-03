@@ -111,3 +111,9 @@ venv.bak/
 .mypy_cache/
 /credentials.csv
 bin/flux2/notes.txt
+bin/istio/kong-staging.istio.dev1.eks.openshiftlabs.net.crt
+.gitignore
+bin/istio/kong-staging.istio.dev1.eks.openshiftlabs.net.csr
+bin/istio/kong-staging.istio.dev1.eks.openshiftlabs.net.key
+bin/istio/openshiftlabs.net.crt
+bin/istio/openshiftlabs.net.key
