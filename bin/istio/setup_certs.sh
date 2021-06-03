@@ -5,6 +5,8 @@ DOMAIN=openshiftlabs.net
 
 rm -rf *${DOMAIN}*
 
+kubectl delete -n istio-system secret kong-tls-credentials 
+
 openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=Kong Inc./CN=${DOMAIN}' -keyout ${DOMAIN}.key -out ${DOMAIN}.crt
 
 openssl req -out ${APP}.${DOMAIN}.csr -newkey rsa:2048 -nodes -keyout ${APP}.${DOMAIN}.key -subj "/CN=${APP}.${DOMAIN}/O=${APP} organization"
@@ -14,4 +16,3 @@ sleep ${SLEEP}
 
 kubectl create -n istio-system secret tls kong-tls-credentials --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
 
-rm -rf *${DOMAIN}*
