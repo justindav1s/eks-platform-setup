@@ -1,4 +1,4 @@
-rm -rf *192.168.28.136*
+#!/bin/bash
 
 APP=kong-staging.istio.dev1.eks
 DOMAIN=openshiftlabs.net
