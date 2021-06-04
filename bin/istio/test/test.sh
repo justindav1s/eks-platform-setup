@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-#HOST=istio-ingressgateway-istio-system.apps.ocp4.datr.eu/api
-HOST=kong.192.168.28.136.nip.io:31997/amazin
+HOST=kong-$1.istio.dev1.eks.openshiftlabs.net/amazin
 
 PROTOCOL=https
 
