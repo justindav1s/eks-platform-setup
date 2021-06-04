@@ -36,6 +36,10 @@ https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/cre
 
 https://www.eksworkshop.com/advanced/310_servicemesh_with_istio/install/
 
+https://itnext.io/istio-external-aws-application-loadbalancer-and-istio-ingress-gateway-fce3bfd3202f
+
+https://rtfm.co.ua/en/kubernetes-update-aws-route53-dns-from-an-ingress/
+
 istioctl manifest apply --set profile=default
 
 Download latest Istion bumdle from Github

@@ -3,7 +3,9 @@
 istioctl manifest apply \
     --set profile=default \
     --set values.global.logging.level=debug \
-    --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
+    --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY \
+    --set meshConfig.accessLogFile=/dev/stdout \
+    --set values.gateways.istio-ingressgateway.type=NodePort
 
 kubectl apply -f istio-1.10.0/samples/addons/prometheus.yaml
 
