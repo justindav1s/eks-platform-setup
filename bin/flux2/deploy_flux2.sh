@@ -10,6 +10,7 @@ GITLAB_USER=demoplatform
 kubectl create namespace flux-system
 
 flux bootstrap gitlab \
+  --components-extra=image-reflector-controller,image-automation-controller \
   --owner=$GITLAB_USER \
   --repository=$REPO \
   --branch=main \
