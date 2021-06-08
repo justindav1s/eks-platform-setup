@@ -3,7 +3,7 @@
 
 IMAGE=inventory
 OLD_VERSION=latest
-NEW_VERSION=1.0.4
+NEW_VERSION=1.0.$1
 REGISTRY_HOST=${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
 

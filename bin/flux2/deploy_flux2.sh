@@ -15,4 +15,5 @@ flux bootstrap gitlab \
   --repository=$REPO \
   --branch=main \
   --path=./clusters/$CLUSTER \
+  --read-write-key \
   --personal
