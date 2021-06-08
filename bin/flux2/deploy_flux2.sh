@@ -11,6 +11,7 @@ kubectl create namespace flux-system
 
 flux bootstrap gitlab \
   --components-extra=image-reflector-controller,image-automation-controller \
+  --ssh-hostname=gitlab.com \
   --owner=$GITLAB_USER \
   --repository=$REPO \
   --branch=main \
