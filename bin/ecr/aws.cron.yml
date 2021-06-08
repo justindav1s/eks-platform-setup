@@ -48,7 +48,7 @@ spec:
               --docker-username=$DOCKER_USER \
               --docker-password=$DOCKER_PASSWORD \
               --docker-email=no@email.local
-              kubectl -n team2-dev create secret docker-registry aws-registry \
+              kubectl -n flux-system create secret docker-registry aws-registry \
               --docker-server=$DOCKER_REGISTRY_SERVER \
               --docker-username=$DOCKER_USER \
               --docker-password=$DOCKER_PASSWORD \
