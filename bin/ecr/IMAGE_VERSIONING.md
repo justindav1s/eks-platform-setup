@@ -36,7 +36,7 @@ we just call the image some like 1.1.3-rc1, 1.1.3-rc2
    1. Parses HelmRelease to be merged, which is the most recent used in e2e
    2. Extracts extract image path and tag from it
       * <e2e_account_id>.dkr.ecr.eu-west-2.amazonaws.com/inventory:1.1.3-rc2
-   3. Uses Skopeo(?) to copy image from 
+   3. Uses Skopeo(?) (https://github.com/containers/skopeo) to copy image from 
       * <e2e_account_id>.dkr.ecr.eu-west-2.amazonaws.com/inventory:1.1.3-rc2
       * to
       * <prd_account_id>.dkr.ecr.eu-west-2.amazonaws.com/inventory:1.1.3  
