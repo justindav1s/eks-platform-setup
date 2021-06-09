@@ -48,4 +48,4 @@ we just call the image some like 1.1.3-rc1, 1.1.3-rc2
 ### TASKS :
 1. SRE Team issue pull request on Production repo by copying Staging Helm Release into Production folder and/or repo.
 2. MR approval updates Production HelmRelease to use <prd_account_id>.dkr.ecr.eu-west-2.amazonaws.com/inventory:1.1.3
-3. 5. Flux 2 does the deploy.
+3. Flux 2 does the deploy.
