@@ -1,15 +1,7 @@
 ## Platform setup.
 
 
-1. Create IAM user with Admin API keys for Ansible.
-2. Install Ansible, aws-cli etc
-3. Go to https://gitlab.com/demoplatform/ansible-eks
-4. See shell scripts in bin dir conform to/update these sothat they can pickup crdentials
-5. Run create_prereqs.sh
-6. Run create_eks.sh
-7. Add Node group
-
-KUBECONFIG should be found at ~/.kube/eks.config
+Use eksctl
 
 ### Dashboard
 
