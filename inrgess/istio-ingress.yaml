@@ -1,0 +1,70 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: istio
+  namespace: istio-system
+spec:
+  rules:
+    - host: istio.kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              serviceName: istio-ingressgateway
+              servicePort: 80
+            path: /
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: istio-kong
+  namespace: istio-system
+spec:
+  rules:
+    - host: kong.kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              serviceName: istio-ingressgateway
+              servicePort: 80
+            path: /
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: istio-kong-shop-dev
+  namespace: istio-system
+spec:
+  rules:
+    - host: shop-dev.kong.kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              serviceName: istio-ingressgateway
+              servicePort: 80
+            path: /
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: istio-kong-shop-e2e
+  namespace: istio-system
+spec:
+  rules:
+    - host: shop-e2e.kong.kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              serviceName: istio-ingressgateway
+              servicePort: 80
+            path: /            

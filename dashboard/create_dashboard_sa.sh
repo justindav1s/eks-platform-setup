@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export KUBECONFIG=~/.kube/eksdev1.config
-
 USER=justindav1s
 
 cat <<EOF | kubectl apply -f -

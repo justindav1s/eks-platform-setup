@@ -4,9 +4,9 @@ PROTOCOL=https
 
 for i in $(seq 1 1000)
 do
-    for NS in dev e2e staging prd
+    for NS in dev e2e
     do
-        HOST=kong-$NS.istio.dev1.eks.openshiftlabs.net/amazin
+        HOST=kong-shop-$NS.api.apps.ocp4.openshiftlabs.net/amazin
 
         echo Iteration \# ${i}
         echo POST -H "Content-Type: application/json" -d @login_request1.json ${PROTOCOL}://${HOST}/login

@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: tracing
+  namespace: istio-system
+spec:
+  rules:
+    - host: tracing.kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              serviceName: tracing
+              servicePort: 80
+            path: /

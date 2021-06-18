@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: grafana
+  namespace: istio-system
+spec:
+  rules:
+    - host: grafana.kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              serviceName: grafana
+              servicePort: 3000
+            path: /

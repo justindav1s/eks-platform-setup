@@ -1,0 +1,72 @@
+The ingress-nginx controller has been installed.
+
+Change the nginx-incontroller service to use NodePort
+
+
+Docker Desktop Kubernetes comes up listening on 127.0.0.1
+
+so edit /etc/hosts like so :
+
+127.0.0.1 kubernetes.docker.internal kiali.kubernetes.docker.internal grafana.kubernetes.docker.internal
+
+Change the nginx-incontroller service to use NodePort. It will begin to listen on ports in the 30000 range on 127.0.0.1
+
+like so 
+
+justin@Justins-MacBook-Pro inrgess % netstat -na | grep LISTEN          
+tcp46      0      0  *.31446                *.*                    LISTEN     
+tcp46      0      0  *.30196                *.*                    LISTEN     
+tcp46      0      0  *.443                  *.*                    LISTEN     
+tcp46      0      0  *.80                   *.*                    LISTEN     
+tcp46      0      0  *.15021                *.*                    LISTEN     
+tcp4       0      0  127.0.0.1.6443         *.*                    LISTEN     
+tcp4       0      0  127.0.0.1.8001         *.*                    LISTEN 
+
+Kiali should be accessible here :
+
+http://kiali.kubernetes.docker.internal:30196/
+
+
+Change Kong's service type to ClusterIP
+
+
+
+
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace default get services -o wide -w ingress-nginx-controller'
+
+An example Ingress that makes use of the controller:
+
+  apiVersion: networking.k8s.io/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: example
+    namespace: foo
+  spec:
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: exampleService
+                servicePort: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+        - hosts:
+            - www.example.com
+          secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
