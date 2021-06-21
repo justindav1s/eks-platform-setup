@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-PROTOCOL=https
+PROTOCOL=http
 
 for i in $(seq 1 1000)
 do
-    for NS in dev e2e
+    for NS in dev
     do
-        HOST=kong-shop-$NS.api.apps.ocp4.openshiftlabs.net/amazin
+        #HOST=kong-shop-$NS.api.apps.ocp4.openshiftlabs.net/amazin
+        HOST=shop-$NS.kubernetes.docker.internal:32624/amazin
 
         echo Iteration \# ${i}
         echo POST -H "Content-Type: application/json" -d @login_request1.json ${PROTOCOL}://${HOST}/login
