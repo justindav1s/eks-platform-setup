@@ -1,11 +1,13 @@
 #!/bin/bash
 
-APP=kong-staging.istio.dev1.eks
-DOMAIN=openshiftlabs.net
+APP=kong
+DOMAIN=kubernetes.docker.internal
 
 rm -rf *${DOMAIN}*
 
-kubectl delete -n istio-system secret kong-tls-credentials 
+kubectl delete -n default secret tls-keys 
+kubectl delete -n istio-system secret tls-keys
+kubectl delete -n kong secret tls-keys
 
 openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=Kong Inc./CN=${DOMAIN}' -keyout ${DOMAIN}.key -out ${DOMAIN}.crt
 
@@ -14,5 +16,6 @@ openssl x509 -req -days 365 -CA ${DOMAIN}.crt -CAkey ${DOMAIN}.key -set_serial 0
 
 sleep ${SLEEP}
 
-kubectl create -n istio-system secret tls kong-tls-credentials --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
-
+kubectl create -n default secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
+kubectl create -n istio-system secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
+kubectl create -n kong secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt

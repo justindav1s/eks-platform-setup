@@ -119,3 +119,8 @@ bin/istio/openshiftlabs.net.crt
 bin/istio/openshiftlabs.net.key
 testing/cluster/login_request_next.json
 testing/cluster/login_request_next.json
+istio/kong.kubernetes.docker.internal.crt
+istio/kong.kubernetes.docker.internal.csr
+istio/kong.kubernetes.docker.internal.key
+istio/kubernetes.docker.internal.crt
+istio/kubernetes.docker.internal.key
