@@ -16,6 +16,12 @@ openssl x509 -req -days 365 -CA ${DOMAIN}.crt -CAkey ${DOMAIN}.key -set_serial 0
 
 sleep ${SLEEP}
 
-kubectl create -n default secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
-kubectl create -n istio-system secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
-kubectl create -n kong secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
+# kubectl create -n default secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
+# kubectl create -n istio-system secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
+# kubectl create -n kong secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
+
+kubectl create -n istio-system secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt -o yaml > tls-keys.yaml
+
+# And for sops
+
+# sops --encrypt --in-place tls-keys.yaml
