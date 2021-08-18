@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PROTOCOL=https
-PORT=30338
+PORT=30093
 
 for i in $(seq 1 1000)
 do

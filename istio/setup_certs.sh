@@ -14,7 +14,7 @@ openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=Kong Inc./
 openssl req -out ${APP}.${DOMAIN}.csr -newkey rsa:2048 -nodes -keyout ${APP}.${DOMAIN}.key -subj "/CN=${APP}.${DOMAIN}/O=${APP} organization"
 openssl x509 -req -days 365 -CA ${DOMAIN}.crt -CAkey ${DOMAIN}.key -set_serial 0 -in ${APP}.${DOMAIN}.csr -out ${APP}.${DOMAIN}.crt
 
-sleep ${SLEEP}
+sleep 5
 
 # kubectl create -n default secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
 # kubectl create -n istio-system secret tls tls-keys --key=${APP}.${DOMAIN}.key --cert=${APP}.${DOMAIN}.crt
