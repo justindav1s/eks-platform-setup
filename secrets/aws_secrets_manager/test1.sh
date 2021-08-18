@@ -1,10 +1,9 @@
 #!/bin/bash
 
 NS=secret-test
-
 Kubectl delete ns $NS
-
 sleep 5 
+
 kubectl create ns $NS
 
 eksctl create iamserviceaccount \
